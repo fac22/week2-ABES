@@ -10,9 +10,15 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.13",
     "prettier": "^2.4.1"
   },
   "scripts": {
-    "test": "cypress open"
+    "test": "cypress open",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
