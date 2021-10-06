@@ -4,5 +4,5 @@
 set -e
 
 
-psql fac-eats-db -q -f "./database/init.sql"
+psql fac_eats_db -q -f "./database/init.sql"
 echo "Populated database tables"
