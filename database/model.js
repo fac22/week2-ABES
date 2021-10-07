@@ -21,4 +21,34 @@ function getReviews() {
   return db.query(queryStr).then((result) => result.rows);
 }
 
-module.exports = { getReviews };
+function writeReviews(submission) {
+  // Security reasons
+  const { restaurant, postcode, review, username } = submission;
+  // we'll receive restaurant-name, restaurant-address, review-text, username
+
+  const queryUsers = /*sql*/ `
+    INSERT INTO
+      users(username)
+    VALUES ($1)
+  `;
+  db.query(queryUsers, [username]);
+
+  const queryPlace = /*sql*/ `
+    INSERT INTO
+        place
+        (place_name, postcode)
+    VALUES
+        ($1, $2)
+        `;
+  db.query(queryPlace, [restaurant, postcode]);
+
+  const queryReviews = /*sql*/ `
+    INSERT INTO
+      reviews(review)
+    VALUES
+      ($1)
+  `;
+  return db.query(queryReviews, [review]);
+}
+
+module.exports = { getReviews, writeReviews };
