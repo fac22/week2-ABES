@@ -14,6 +14,10 @@ server.get('/', home.get);
 server.get('/review', review.get);
 server.post('/review', bodyParser, review.post);
 
+// Static handler
+const staticHandler = express.static('public');
+server.use(staticHandler);
+
 // Set up port
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
