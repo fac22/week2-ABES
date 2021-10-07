@@ -4,8 +4,9 @@ const layout = require('../layout');
 const database = require('../database.js');
 
 function get(request, response) {
-  const html = /*html*/ `
-    <form method='POST' action='/review'>
+  const html = /* html */ `
+  <header>
+    <form class="box center" method='POST' action='/review'>
         <label for="restaurant">Restaurant</label>
         <input type="text" id="restaurant" name="restaurant" />
         <label for="postcode">Postcode</label>
@@ -19,6 +20,7 @@ function get(request, response) {
 
         <button type='submit'>Submit</button>
     </form>
+    </header>
 `;
   response.send(layout('Review', html));
 }
