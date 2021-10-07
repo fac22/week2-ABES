@@ -1,13 +1,18 @@
 'use strict';
 
+const home = require('./routes/home');
+const review = require('./routes/review');
+
 // Create server
 const express = require('express');
 const server = express();
 
+const bodyParser = express.urlencoded({ extended: false });
+
 // Use server
-server.get('/', (request, response) => {
-  response.send('<h1>Hello. Great!</h1>');
-});
+server.get('/', home.get);
+server.get('/review', review.get);
+server.post('/review', bodyParser, review.post);
 
 // Set up port
 const PORT = process.env.PORT || 3000;
