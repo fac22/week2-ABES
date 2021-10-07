@@ -28,7 +28,7 @@ CREATE TABLE reviews (
   place_id INTEGER REFERENCES place(place_id),
   author_id INTEGER REFERENCES users(author_id) ON DELETE CASCADE,
   -- here, ON DELETE CASCADE means delete the post if the author gets deleted
-  heading VARCHAR(50) NOT NULL,
+  -- heading VARCHAR(50) NOT NULL,
   review TEXT
 );
 
@@ -42,8 +42,8 @@ INSERT INTO place (place_name, postcode, rating) VALUES
   ('Bringing your own lunch', 'N4', 5)
 ;
 
-INSERT INTO reviews (heading, review, place_id, author_id) VALUES
-  ('Just OK!', 'The service was slow and some of the food had actual poison in it! Otherwise lovely place to eat.', 1, 1)
+INSERT INTO reviews (review, place_id, author_id) VALUES
+  ('The service was slow and some of the food had actual poison in it! Otherwise lovely place to eat.', 1, 1)
 ;
 
 

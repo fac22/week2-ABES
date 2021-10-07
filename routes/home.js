@@ -1,10 +1,31 @@
 'use strict';
 
+const { getReviews } = require('../database/model.js');
+
 const layout = require('../layout');
 
 function get(request, response) {
-  const html = /* html */ `
-  <header>
+
+  getReviews()
+    .then((data) =>
+      data
+        .map(
+          (review) => /*html*/ `
+          <article class="center box">
+        <div class='row'>
+        <h2>${review.place_name} </h2>
+        <p>${review.rating.toString()}</p>
+        <p>${review.postcode}</p>
+        </div>
+        <p>${review.username}: ${review.review}</p>
+        </article>
+          `
+        )
+        .join('')
+    )
+    .then(
+      (reviewsHtml) => /*html*/ `
+           <header>
     <img src="" alt=""/>
     <h1 class="center">FAC eats?</h1>
   </header>
@@ -14,34 +35,30 @@ function get(request, response) {
   </nav>
 
   <main>
-    <article class="center box">
-        <div class='row'>
-        <h2>RESTAURANT NAME </h2>
-        <p> RATING</p>
-        <p>Postcode</p>
-        </div>
-        <p>Username: Review</p>
-        </article>
-    <article class="center box">
-      <div class='row'>
-        <h2>Serious Dan's wet burgers </h2>
-        <p> 🍔 / 5 </p>
-        <p>WE11 0FH</p>
-      </div>
-        <p>Betty: Don't go here, it's a travel agent!
-    </article>
-    <article class="center box">
-      <div class='row'>
-        <h2>El Jefe's</h2>
-        <p> 🍔🍔🍔 / 5 </p>
-        <p>SE10 6QQ</p>
-      </div>
-        <p>Capybara: I loved it!</p>
-        <p>Goldfish: I don't love it! </p>
-    </article>
+               ${reviewsHtml}
   </main>
-  `;
-  response.send(layout('Home', html));
+          `
+    )
+    .then((homeHtml) => {
+      console.group(homeHtml);
+      response.send(layout('Home', homeHtml));
+    });
+  // const homeHtml = /*html*/ `
+  // <header>
+  //   <img src="" alt=""/>
+  //   <h1>FAC EATS</h1>
+  // </header>
+
+  // <nav>
+  //   <a href="/review">Review</a>
+  // </nav>
+
+  // <main>
+  //   ${reviewsHtml}
+  // </main>
+  // `;
+  // response.send(layout('Home', homeHtml));
+
 }
 
 module.exports = { get };

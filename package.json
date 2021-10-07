@@ -15,10 +15,12 @@
   },
   "scripts": {
     "test": "cypress open",
-    "dev": "nodemon server.js",
+    "dev": "nodemon -r -L dotenv/config server.js",
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "pg": "^8.7.1"
   }
 }
