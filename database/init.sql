@@ -6,31 +6,34 @@ BEGIN;
 
 -- Delete existing tables
 -- also "cascade" to delete any relations
-DROP TABLE IF EXISTS users, blog_posts CASCADE;
+DROP TABLE IF EXISTS reviews, place, users CASCADE;
 
-CREATE TABLE reviews (
-  id SERIAL PRIMARY KEY NOT NULL,
-  -- maybe id NOT NULL is not necessary? we left it in to be on the safe side for now
-  place_id INTEGER REFERENCES place(id),
-  author_id INTEGER REFERENCES user(id) ON DELETE CASCADE,
-  heading VARCHAR(50) NOT NULL,
-  review TEXT
-);
 
-CREATE TABLE place (
-  id SERIAL PRIMARY KEY NOT NULL,
-  place_name VARCHAR(50) NOT NULL,
-  rating INTEGER
-);
-
-CREATE TABLE user (
-  id SERIAL PRIMARY KEY NOT NULL,
+CREATE TABLE users (
+  author_id SERIAL PRIMARY KEY NOT NULL,
   username VARCHAR (30) NOT NULL
   -- to handle username, we need a function: if a user doesn't enter a username --> pretend they entered 'Anonymous'. All non-username reviews are then attached to 'Anonymous' in the user table
 );
 
-INSERT INTO reviews (heading, review, place_id, author_id) VALUES
-  ('Just OK!', "The service was slow and some of the food had actual poison in it! Otherwise lovely place to eat.", 1, 1)
+CREATE TABLE place (
+  place_id SERIAL PRIMARY KEY NOT NULL,
+  place_name VARCHAR(50) NOT NULL,
+  rating INTEGER
+);
+
+CREATE TABLE reviews (
+  id SERIAL PRIMARY KEY NOT NULL,
+  -- maybe id NOT NULL is not necessary? we left it in to be on the safe side for now
+  place_id INTEGER REFERENCES place(place_id),
+  author_id INTEGER REFERENCES users(author_id) ON DELETE CASCADE,
+  -- here, ON DELETE CASCADE means delete the post if the author gets deleted
+  heading VARCHAR(50) NOT NULL,
+  review TEXT
+);
+
+INSERT INTO users (username) VALUES 
+  ('Cyber_granny'),
+  ('Anonymous')
 ;
 
 INSERT INTO place (place_name, rating) VALUES 
@@ -38,10 +41,11 @@ INSERT INTO place (place_name, rating) VALUES
   ('Bringing your own lunch', 5)
 ;
 
-INSERT INTO user (user) VALUES 
-  ('Cyber_granny'),
-  ('Anonymous')
+INSERT INTO reviews (heading, review, place_id, author_id) VALUES
+  ('Just OK!', 'The service was slow and some of the food had actual poison in it! Otherwise lovely place to eat.', 1, 1)
 ;
+
+
 
 --  Create tables and define their columns
 
