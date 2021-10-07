@@ -1,5 +1,5 @@
 'use strict';
-const layout = require('./layout.js');
+
 const home = require('./routes/home');
 const review = require('./routes/review');
 
@@ -7,13 +7,12 @@ const review = require('./routes/review');
 const express = require('express');
 const server = express();
 
-// example data
-
-// ---------------------
+const bodyParser = express.urlencoded({ extended: false });
 
 // Use server
 server.get('/', home.get);
 server.get('/review', review.get);
+server.post('/review', bodyParser, review.post);
 
 // Set up port
 const PORT = process.env.PORT || 3000;
