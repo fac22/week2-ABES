@@ -7,8 +7,9 @@ const layout = require('../layout');
 function get(request, response) {
   getReviews()
     .then((data) =>
-      data.map(
-        (review) => /*html*/ `
+      data
+        .map(
+          (review) => /*html*/ `
           <article>
                 <h2>${review.place_name}</h2>
                 <p>${review.postcode}</p>
@@ -17,7 +18,8 @@ function get(request, response) {
                 <p>${review.review}</p>
             </article>
           `
-      )
+        )
+        .join('')
     )
     .then(
       (reviewsHtml) => /*html*/ `
@@ -35,7 +37,10 @@ function get(request, response) {
           </main>
           `
     )
-    .then((homeHtml) => response.send(layout('Home', homeHtml)));
+    .then((homeHtml) => {
+      console.group(homeHtml);
+      response.send(layout('Home', homeHtml));
+    });
   // const homeHtml = /*html*/ `
   // <header>
   //   <img src="" alt=""/>

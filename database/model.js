@@ -44,11 +44,11 @@ function writeReviews(submission) {
 
   const queryReviews = /*sql*/ `
     INSERT INTO
-      reviews(review)
+      reviews(review, author_id, place_id)
     VALUES
-      ($1)
+      ($1, (SELECT author_id FROM users WHERE username = $2), (SELECT place_id FROM place WHERE place_name = $3))
   `;
-  return db.query(queryReviews, [review]);
+  return db.query(queryReviews, [review, username, restaurant]);
 }
 
 module.exports = { getReviews, writeReviews };
