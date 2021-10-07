@@ -18,6 +18,7 @@ CREATE TABLE users (
 CREATE TABLE place (
   place_id SERIAL PRIMARY KEY NOT NULL,
   place_name VARCHAR(50) NOT NULL,
+  postcode TEXT NOT NULL,
   rating INTEGER
 );
 
@@ -36,9 +37,9 @@ INSERT INTO users (username) VALUES
   ('Anonymous')
 ;
 
-INSERT INTO place (place_name, rating) VALUES 
-  ('Picnic in the parc', 3), 
-  ('Bringing your own lunch', 5)
+INSERT INTO place (place_name, postcode, rating) VALUES 
+  ('Picnic in the parc', 'N4', 3), 
+  ('Bringing your own lunch', 'N4', 5)
 ;
 
 INSERT INTO reviews (heading, review, place_id, author_id) VALUES
