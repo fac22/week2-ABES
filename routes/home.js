@@ -1,8 +1,11 @@
 'use strict';
 
+const { getReviews } = require('../database/model.js');
+
 const layout = require('../layout');
 
 function get(request, response) {
+  getReviews().then((data) => console.log(data));
   const html = /*html*/ `
   <header>
     <img src="" alt=""/>
@@ -22,7 +25,7 @@ function get(request, response) {
         <p>Review</p>
     </article>
   </main>
-  `
+  `;
   response.send(layout('Home', html));
 }
 
