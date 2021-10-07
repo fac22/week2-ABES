@@ -5,36 +5,38 @@ const { getReviews } = require('../database/model.js');
 const layout = require('../layout');
 
 function get(request, response) {
+
   getReviews()
     .then((data) =>
       data
         .map(
           (review) => /*html*/ `
-          <article>
-                <h2>${review.place_name}</h2>
-                <p>${review.postcode}</p>
-                <p>${review.rating.toString()}</p>
-                <p>${review.username}</p>
-                <p>${review.review}</p>
-            </article>
+          <article class="center box">
+        <div class='row'>
+        <h2>${review.place_name} </h2>
+        <p>${review.rating.toString()}</p>
+        <p>${review.postcode}</p>
+        </div>
+        <p>${review.username}: ${review.review}</p>
+        </article>
           `
         )
         .join('')
     )
     .then(
       (reviewsHtml) => /*html*/ `
-          <header>
-            <img src="" alt=""/>
-            <h1>FAC EATS</h1>
-          </header>
+           <header>
+    <img src="" alt=""/>
+    <h1 class="center">FAC eats?</h1>
+  </header>
 
-          <nav>
-            <a href="/review">Review</a>
-          </nav>
+  <nav class="banner center">
+    <a href="/review">Add your review</a>
+  </nav>
 
-          <main>
-            ${reviewsHtml}
-          </main>
+  <main>
+               ${reviewsHtml}
+  </main>
           `
     )
     .then((homeHtml) => {
@@ -56,6 +58,7 @@ function get(request, response) {
   // </main>
   // `;
   // response.send(layout('Home', homeHtml));
+
 }
 
 module.exports = { get };
