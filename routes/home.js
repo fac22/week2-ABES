@@ -41,7 +41,8 @@ function get(request, response) {
     )
     .then((homeHtml) => {
       response.send(layout('Home', homeHtml));
-    });
+    })
+    .catch(() => response.send('<h1> nooooo </h1>'));
   // const homeHtml = /*html*/ `
   // <header>
   //   <img src="" alt=""/>
