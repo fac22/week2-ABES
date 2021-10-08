@@ -17,7 +17,7 @@ function getReviews() {
     LEFT JOIN users
       ON reviews.author_id = users.author_id
   `;
-
+  // console.log(queryStr)
   return db.query(queryStr).then((result) => result.rows);
 }
 
