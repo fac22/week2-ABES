@@ -1,6 +1,6 @@
 const pg = require('pg');
 
-if (!process.env.DATABASE_URL) {
+if (! ) {
   throw new Error('DATABASE_URL environment variable is not set');
 }
 
