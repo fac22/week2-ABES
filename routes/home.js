@@ -5,26 +5,26 @@ const { getReviews } = require('../database/model.js');
 const layout = require('../layout');
 
 function get(request, response) {
-
   getReviews()
-    .then((data) =>
-      data
+    .then((data) => {
+      console.log(data);
+      return data
         .map(
-          (review) => /*html*/ `
-          <article class="center box">
+          (review) => /* html */ `
+          <article class='center box'>
         <div class='row'>
         <h2>${review.place_name} </h2>
-        <p>${review.rating.toString()}</p>
+        <p>${review.rating || `0 / 5`}</p>
         <p>${review.postcode}</p>
         </div>
         <p>${review.username}: ${review.review}</p>
         </article>
           `
         )
-        .join('')
-    )
+        .join('');
+    })
     .then(
-      (reviewsHtml) => /*html*/ `
+      (reviewsHtml) => /* html */ `
            <header>
     <img src="" alt=""/>
     <h1 class="center">FAC eats?</h1>
@@ -40,7 +40,6 @@ function get(request, response) {
           `
     )
     .then((homeHtml) => {
-      console.group(homeHtml);
       response.send(layout('Home', homeHtml));
     });
   // const homeHtml = /*html*/ `
@@ -58,7 +57,6 @@ function get(request, response) {
   // </main>
   // `;
   // response.send(layout('Home', homeHtml));
-
 }
 
 module.exports = { get };

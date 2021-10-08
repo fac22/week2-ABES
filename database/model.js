@@ -4,17 +4,17 @@ const db = require('./connection.js');
 
 function getReviews() {
   // create an obj { restaurant-name, address, rating, author, review}
-  const queryStr = /*sql*/ `
+  const queryStr = /* sql */ `
     SELECT
       place.place_name,
       place.postcode,
       place.rating,
       users.username,
       reviews.review
-    FROM reviews
-    JOIN place
+    FROM place
+    LEFT JOIN reviews
       ON reviews.place_id = place.place_id
-    JOIN users
+    LEFT JOIN users
       ON reviews.author_id = users.author_id
   `;
 
@@ -26,14 +26,14 @@ function writeReviews(submission) {
   const { restaurant, postcode, review, username } = submission;
   // we'll receive restaurant-name, restaurant-address, review-text, username
 
-  const queryUsers = /*sql*/ `
+  const queryUsers = /* sql */ `
     INSERT INTO
       users(username)
     VALUES ($1)
   `;
   db.query(queryUsers, [username]);
 
-  const queryPlace = /*sql*/ `
+  const queryPlace = /* sql */ `
     INSERT INTO
         place
         (place_name, postcode)
@@ -42,7 +42,7 @@ function writeReviews(submission) {
         `;
   db.query(queryPlace, [restaurant, postcode]);
 
-  const queryReviews = /*sql*/ `
+  const queryReviews = /* sql */ `
     INSERT INTO
       reviews(review, author_id, place_id)
     VALUES
