@@ -44,8 +44,9 @@ function post(request, response) {
   // database.reviews.push(reviewObj);
   // database.restaurants.push(restaurantObj);
   // console.log(database.users, database.reviews, database.restaurants);
-  writeReviews(request.body);
-  response.redirect('/');
+  writeReviews(request.body).then(() => {
+    response.redirect('/');
+  });
 }
 
 module.exports = { get, post };

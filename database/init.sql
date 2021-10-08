@@ -33,13 +33,11 @@ CREATE TABLE reviews (
 );
 
 INSERT INTO users (username) VALUES 
-  ('Cyber_granny'),
-  ('Anonymous')
+  ('Cyber_granny')
 ;
 
 INSERT INTO place (place_name, postcode, rating) VALUES 
-  ('Picnic in the parc', 'N4', 3), 
-  ('Bringing your own lunch', 'N4', 5)
+  ('Picnic in the parc', 'N4', 3)
 ;
 
 INSERT INTO reviews (review, place_id, author_id) VALUES
